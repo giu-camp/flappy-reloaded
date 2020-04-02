@@ -26,15 +26,10 @@
     var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create });
 
     function preload() {
-        game.load.image('einstein', 'assets/potion.png');
         game.load.image('bird', 'assets/bird.png');
     }
 
     function create() {
-        var potionImage = game.add.sprite(400, 200, 'einstein');
-
-        potionImage.angle = 45;
-
         var bird = game.add.sprite(64, 200, 'bird');
         bird.anchor.setTo(0.5);
         //bird.angle = 45;
