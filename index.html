@@ -23,21 +23,47 @@
         }
     };
 
-    var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create });
+    var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
 
+    const speed = 10;
     function preload() {
         game.load.image('bird', 'assets/bird.png');
     }
 
+    var bird;
+
     function create() {
-        var bird = game.add.sprite(64, 200, 'bird');
+        bird = game.add.sprite(64, 200, 'bird');
         bird.anchor.setTo(0.5);
         //bird.angle = 45;
+
+        upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
+        downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+        leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+        rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
 
         //mysprite.inputEnabled = true;
         //mysprite.input.enableDrag(true);
     }
+    
 
+    function update() {
+        if ( bird ) {
+            if (upKey.isDown) {
+                bird.y-=speed;
+            }
+            else if (downKey.isDown) {
+                bird.y+=speed;
+            }
+
+            if (leftKey.isDown){
+                bird.x-=speed;
+            } else if (rightKey.isDown) {
+                bird.x+=speed;
+            }
+        }
+
+    }
     </script>
 
 </body>
