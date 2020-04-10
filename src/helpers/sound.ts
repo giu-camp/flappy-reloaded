@@ -1,4 +1,4 @@
-import { Howl } from 'howler';
+import { Howl } from "howler";
 
 const createHowler: any = (
     src: string | Array<string>,
@@ -18,7 +18,7 @@ const createHowler: any = (
 };
 
 export const Sound: any = createHowler([
-    'assets/sounds/button.m4a',
-    'assets/sounds/button.mp3',
-    'assets/sounds/button.ogg'
+    "assets/sounds/button.m4a",
+    "assets/sounds/button.mp3",
+    "assets/sounds/button.ogg"
 ]);

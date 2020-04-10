@@ -11,9 +11,11 @@ Make sure you have [NodeJS](/https://nodejs.org/en/) installed. 12.16.2 LTS.
 
 Then, open a terminal and enter these commands :
 
+`
 git clone https://github.com/giu-camp/flappy-reloaded
 cd flappy-reloaded
 npm install
 npm run start
+`
 
 ... and then open a browser at http://localhost:8000/
