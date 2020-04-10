@@ -1,7 +1,7 @@
 # Flappy Bird Reloaded
-A collaborative project meant to be used as an example for educational purposes.
+A collaborative project meant to be used as an example for educational purposes, started on 2/april/2020.
 
-Github useful commands : [click here](/docs/gitcommands.md).
+Git useful commands : [click here](/docs/gitcommands.md).
 
 ![Bird](/assets/sprites/bird.png "Project Bird")
 
