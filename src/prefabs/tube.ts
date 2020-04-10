@@ -4,6 +4,9 @@ export class Tube extends Phaser.Sprite {
 
         this.anchor.setTo(0.5);
         this.game.physics.arcade.enableBody(this);
+
+        game.add.existing(this);
+
         // this.checkWorldBounds = true;
         // this.body.collideWorldBounds = true;
     }
