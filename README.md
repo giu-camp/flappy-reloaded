@@ -3,7 +3,7 @@ A collaborative project meant to be used as an example for educational purposes.
 
 Github useful commands : [click here](/docs/gitcommands.md).
 
-![Bird](/assets/bird.png "Project Bird")
+![Bird](/assets/sprites/bird.png "Project Bird")
 
 
 ## How to setup:
