@@ -1,5 +1,6 @@
 import {Sound} from "../helpers/sound";
 import {Mushroom} from "../prefabs/mushroom";
+import { Tube } from "../prefabs/tube";
 
 export class Game extends Phaser.State {
     private mushroom: Mushroom;
@@ -7,10 +8,14 @@ export class Game extends Phaser.State {
     private text: Phaser.BitmapText;
     private spaceKey: Phaser.Key;
 
+    private bird;
+
     public create(): void {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        const bird = this.game.add.sprite(50, 50, "bird");
+        const bird = this.bird = this.game.add.sprite(50, 50, "bird");
+        const tube = new Tube(this.state.getCurrentState().game, 300, 600);
+        this.game.add.existing(tube);
 
         this.text = this.game.add.bitmapText(this.game.world.centerX, this.game.world.centerY + 100, "font", "Press Arrows / Space", 15);
         this.text.x = this.text.x - ~~(this.text.width * 0.5);
