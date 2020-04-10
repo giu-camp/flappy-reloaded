@@ -7,7 +7,7 @@ Git useful commands : [click here](/docs/gitcommands.md).
 
 
 ## How to setup:
-Make sure you have [NodeJS](/https://nodejs.org/en/) installed. 12.16.2 LTS.
+Make sure you have [NodeJS](https://nodejs.org/en/) **12.16.2** LTS installed.
 
 Then, open a terminal and enter these commands :
 ```
