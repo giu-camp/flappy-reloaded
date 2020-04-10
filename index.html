@@ -1,70 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
 <head>
-    <script src="./lib/phaser.min.js"></script>
+    <title>Template</title>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1, IE=9">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="robots" content="noindex,nofollow"/>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="apple-mobile-web-app-title" content="Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+    <style type="text/css">
+        body, html {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            font-size: 13px;
+            background: #000000;
+
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+
+            cursor: pointer;
+            overflow: hidden;
+
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
+
 <body>
-
-    <script>
-    var config = {
-        type: Phaser.AUTO,
-        width: 1200,
-        height: 800,
-        physics: {
-            default: 'arcade',
-            arcade: {
-                gravity: { y: 200 }
-            }
-        },
-        scene: {
-            preload: preload,
-            create: create
-        }
-    };
-
-    var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
-
-    const speed = 10;
-    function preload() {
-        game.load.image('bird', 'assets/bird.png');
-    }
-
-    var bird;
-
-    function create() {
-        bird = game.add.sprite(64, 200, 'bird');
-        bird.anchor.setTo(0.5);
-        //bird.angle = 45;
-
-        upKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
-        downKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
-        leftKey = game.input.keyboard.addKey(Phaser.Keyboard.A);
-        rightKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
-
-        //mysprite.inputEnabled = true;
-        //mysprite.input.enableDrag(true);
-    }
-    
-
-    function update() {
-        if ( bird ) {
-            if (upKey.isDown) {
-                bird.y-=speed;
-            }
-            else if (downKey.isDown) {
-                bird.y+=speed;
-            }
-
-            if (leftKey.isDown){
-                bird.x-=speed;
-            } else if (rightKey.isDown) {
-                bird.x+=speed;
-            }
-        }
-
-    }
-    </script>
-
 </body>
 </html>
