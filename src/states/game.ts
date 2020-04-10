@@ -11,6 +11,7 @@ export class Game extends Phaser.State {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         const bird = this.game.add.sprite(50, 50, "bird");
+        const mushroom = this.game.add.sprite(250, 50, "mushroom");
 
         this.text = this.game.add.bitmapText(this.game.world.centerX, this.game.world.centerY + 100, "font", "Press Arrows / Space", 15);
         this.text.x = this.text.x - ~~(this.text.width * 0.5);
