@@ -11,6 +11,7 @@ export class Preload extends Phaser.State {
         this.game.load.image("mushroom", "assets/sprites/mushroom.png");
         this.game.load.image("bird", "assets/sprites/bird.png");
         this.game.load.image("tube", "assets/sprites/tube.png");
+        this.game.load.image("background", "assets/sprites/background.png");
 
         // Initialize Howler
         Sound.load();

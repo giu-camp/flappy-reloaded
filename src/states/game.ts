@@ -9,7 +9,12 @@ export class Game extends Phaser.State {
 
     private tubesArray = [];
 
+    private background;
+
     public create(): void {
+        this.background = this.game.add.sprite(0, 0, "background");
+        this.background.height = 480;
+
         this.bird = this.game.add.sprite(75, 100, "bird");
         this.bird.anchor.setTo(0.5);
 
@@ -39,6 +44,8 @@ export class Game extends Phaser.State {
         for ( let i = 0; i < this.tubesArray.length; i++ ) {
             this.tubesArray[i].x -= 5;
         }
+
+        this.background.x -= 0.5;
     }
 
 
