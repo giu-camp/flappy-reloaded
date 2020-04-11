@@ -8,7 +8,8 @@ export class Game extends Phaser.State {
     private gravity = 0.1;
 
     public create(): void {
-        this.bird = this.game.add.sprite(50, 100, "bird");
+        this.bird = this.game.add.sprite(75, 100, "bird");
+        this.bird.anchor.setTo(0.5);
 
         const tube = new Tube(this.game, 300, 600);
 
@@ -21,6 +22,8 @@ export class Game extends Phaser.State {
     public update() {
         this.speedY += this.gravity;
         this.bird.y += this.speedY;
+
+        this.bird.angle = this.speedY * 5;
     }
 
 
