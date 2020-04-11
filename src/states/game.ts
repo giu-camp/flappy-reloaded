@@ -3,16 +3,19 @@ import { Tube } from "../prefabs/tube";
 export class Game extends Phaser.State {
 
     private bird;
-    private tube;
     private spaceKey: Phaser.Key;
     private speedY = 0;
     private gravity = 0.1;
+
+    private tubesArray = [];
 
     public create(): void {
         this.bird = this.game.add.sprite(75, 100, "bird");
         this.bird.anchor.setTo(0.5);
 
-        this.tube = new Tube(this.game, 600, 600);
+        for ( let i = 0; i < 10; i++ ) {
+            this.tubesArray.push ( new Tube(this.game, 600 + i * 300, 600) );
+        }
 
         this.spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.spaceKey.onDown.add(() => {
@@ -26,7 +29,9 @@ export class Game extends Phaser.State {
 
         this.bird.angle = this.speedY * 5;
 
-        this.tube.x -= 10;
+        for ( let i = 0; i < this.tubesArray.length; i++ ) {
+            this.tubesArray[i].x -= 5;
+        }
     }
 
 
