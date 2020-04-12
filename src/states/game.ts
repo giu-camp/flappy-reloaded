@@ -6,32 +6,25 @@ export class Game extends Phaser.State {
     private spaceKey: Phaser.Key;
     private speedY = 0;
     private gravity = 0.1;
-
     private floorTubesArray = [];
     private ceilingTubesArray = [];
-
     private background;
-
     public create(): void {
         this.background = this.game.add.sprite(0, 0, "background");
         this.background.height = 480;
-
         this.bird = this.game.add.sprite(75, 100, "bird");
         this.bird.anchor.setTo(0.5);
-
         for ( let i = 0; i < 10; i++ ) {
+            const heightVariation = (Math.random() * (100 + 100) - 100);
 
-            const currentTube = new Tube(this.game, 600 + i * 300, 600);
-            this.floorTubesArray.push ( currentTube );
+            const floorTube = new Tube(this.game, 600 + i * 300, 615 + heightVariation);
+            this.floorTubesArray.push ( floorTube );
+
+            const ceilingTube = new Tube(this.game, 600 + i * 300, 615 + heightVariation);
+            ceilingTube.angle = 180;
+            ceilingTube.y -= 750;
+            this.ceilingTubesArray.push ( ceilingTube );
         }
-        for ( let i = 0; i < 10; i++ ) {
-
-            const currentTube = new Tube(this.game, 600 + i * 300, 600);
-            currentTube.angle = 180;
-            currentTube.y -= 750;
-            this.ceilingTubesArray.push ( currentTube );
-        }
-
         this.spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.spaceKey.onDown.add(() => {
             this.speedY = -5;
