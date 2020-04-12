@@ -9,23 +9,18 @@ export class Game extends Phaser.State {
     private floorTubesArray = [];
     private ceilingTubesArray = [];
     private background;
-    heightVariation: number;
-
     public create(): void {
         this.background = this.game.add.sprite(0, 0, "background");
         this.background.height = 480;
-        
-
         this.bird = this.game.add.sprite(75, 100, "bird");
         this.bird.anchor.setTo(0.5);
-        
         for ( let i = 0; i < 10; i++ ) {
-            this.heightVariation = (Math.random() * (100+100) - 100);
+            const heightVariation = (Math.random() * (100 + 100) - 100);
 
-            const floorTube = new Tube(this.game, 600 + i * 300, 615 + this.heightVariation);
+            const floorTube = new Tube(this.game, 600 + i * 300, 615 + heightVariation);
             this.floorTubesArray.push ( floorTube );
 
-            const ceilingTube = new Tube(this.game, 600 + i * 300, 615 + this.heightVariation);
+            const ceilingTube = new Tube(this.game, 600 + i * 300, 615 + heightVariation);
             ceilingTube.angle = 180;
             ceilingTube.y -= 750;
             this.ceilingTubesArray.push ( ceilingTube );
