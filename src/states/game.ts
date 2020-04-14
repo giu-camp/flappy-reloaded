@@ -17,7 +17,7 @@ export class Game extends Phaser.State {
             this.backgrounds.push(background);
         }
         this.bird = this.game.add.sprite(75, 100, "bird");
-        //this.bird.anchor.setTo(0.5);
+        this.bird.anchor.setTo(0.5);
         this.bird.scale.setTo(0.7);
         for ( let i = 0; i < 10; i++ ) {
             const heightVariation = (Math.random() * (100 + 100) - 100);
