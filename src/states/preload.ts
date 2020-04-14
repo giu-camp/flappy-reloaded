@@ -12,6 +12,7 @@ export class Preload extends Phaser.State {
         this.game.load.image("bird", "assets/sprites/bird.png");
         this.game.load.image("tube", "assets/sprites/tube.png");
         this.game.load.image("background", "assets/sprites/background.png");
+        this.game.load.image("button", "assets/sprites/pause.png");
 
         // Initialize Howler
         Sound.load();
@@ -25,7 +26,7 @@ export class Preload extends Phaser.State {
 
     public update(): void {
         if ( (this.ready === true) && (Sound.loaded === true) ) {
-            this.game.state.start("Game");
+            this.game.state.start("MainMenu");
         }
     }
 
