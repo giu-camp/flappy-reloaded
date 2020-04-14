@@ -9,6 +9,10 @@ export class Game extends Phaser.State {
     private floorTubesArray = [];
     private ceilingTubesArray = [];
     private backgrounds = [];
+    private scoreValue = 0;
+    private score;
+    private colision;
+    private colisionValue = 0;
     public create(): void {
         for (let i = 0; i < 2; i++) {
             const background = this.game.add.sprite(0, 0, "background");
@@ -18,7 +22,7 @@ export class Game extends Phaser.State {
         }
         this.bird = this.game.add.sprite(75, 100, "bird");
         this.bird.anchor.setTo(0.5);
-        this.bird.scale.setTo(0.7);
+        this.bird.scale.setTo(0.65);
         for ( let i = 0; i < 10; i++ ) {
             const heightVariation = (Math.random() * (100 + 100) - 100);
 
@@ -30,6 +34,8 @@ export class Game extends Phaser.State {
             ceilingTube.y -= 750;
             this.ceilingTubesArray.push ( ceilingTube );
         }
+        this.score = this.game.add.bitmapText(200, 30, "font", "Score: ", 35);
+        this.colision = this.game.add.bitmapText(200, 70, "font", "Colisions: ", 35);
         this.spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.spaceKey.onDown.add(() => {
             this.speedY = -5;
@@ -39,7 +45,6 @@ export class Game extends Phaser.State {
     public update() {
         this.speedY += this.gravity;
         this.bird.y += this.speedY;
-
         this.bird.angle = this.speedY * 5;
 
         for ( let i = 0; i < this.floorTubesArray.length; i++ ) {
@@ -53,6 +58,32 @@ export class Game extends Phaser.State {
                 element.x += element.width * 2;
             }
         });
+        if (this.floorTubesArray[this.scoreValue]) {
+            if (this.floorTubesArray[this.scoreValue].x === this.bird.x) {
+                this.scoreValue++;
+                this.score.text = "Score: " + (this.scoreValue);
+
+            }
+            if (this.floorTubesArray[this.scoreValue]) {
+            let floorTubeStart = ((this.floorTubesArray[this.scoreValue].x - 135 ) < this.bird.x);
+            let floorTubeEnd = (this.bird.x < (this.floorTubesArray[this.scoreValue].x  + 135 ));
+            let floorTubePeak = ((this.floorTubesArray[this.scoreValue].y - 331) < this.bird.y);
+            let floorTubeBottom = (this.bird.y < (this.floorTubesArray[this.scoreValue].y + 331));
+
+            let ceilingTubeStart = ((this.ceilingTubesArray[this.scoreValue].x - 135 ) < this.bird.x);
+            let ceilingTubeEnd = (this.bird.x < (this.ceilingTubesArray[this.scoreValue].x  + 135 ));
+            let ceilingTubePeak = ((this.ceilingTubesArray[this.scoreValue].y - 331) < this.bird.y);
+            let ceilingTubeBottom = (this.bird.y < (this.ceilingTubesArray[this.scoreValue].y + 331));
+            if (floorTubeStart && floorTubeEnd && floorTubePeak && floorTubeBottom) {
+                this.colisionValue++;
+                this.colision.text = "Colision: " + (this.colisionValue);
+            }
+            if (ceilingTubeStart && ceilingTubeEnd && ceilingTubePeak && ceilingTubeBottom) {
+                this.colisionValue++;
+                this.colision.text = "Colision: " + (this.colisionValue);
+            }
+            }
+        }
     }
 
 
