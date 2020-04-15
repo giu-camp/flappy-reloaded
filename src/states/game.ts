@@ -14,8 +14,7 @@ export class Game extends Phaser.State {
     private backgrounds = [];
     private scoreValue = 0;
     private score;
-    private colision;
-    private colisionValue = 0;
+    private collision = 0;
     public create(): void {
         for (let i = 0; i < 2; i++) {
             const background = this.game.add.sprite(0, 0, "background");
@@ -41,7 +40,6 @@ export class Game extends Phaser.State {
         this.button.scale.setTo(0.4);
         this.button.inputEnabled = true;
         this.score = this.game.add.bitmapText(200, 30, "font", "Score: ", 35);
-        this.colision = this.game.add.bitmapText(200, 70, "font", "Colisions: ", 35);
         this.spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.spaceKey.onDown.add(() => {
             this.speedY = -5;
@@ -50,11 +48,11 @@ export class Game extends Phaser.State {
     }
 
     public update() {
-        if(this.pausecond === 0){
-            this.escKey.onDown.add(()=>{
+        if (this.pausecond === 0) {
+            this.escKey.onDown.add(() => {
                 this.pausecond = 1;
             }, this);
-            this.button.events.onInputDown.add(()=>{
+            this.button.events.onInputDown.add(() => {
                 this.pausecond = 1;
             }, this);
         this.speedY += this.gravity;
@@ -79,32 +77,39 @@ export class Game extends Phaser.State {
 
             }
             if (this.floorTubesArray[this.scoreValue]) {
-            let floorTubeStart = ((this.floorTubesArray[this.scoreValue].x - 135 ) < this.bird.x);
-            let floorTubeEnd = (this.bird.x < (this.floorTubesArray[this.scoreValue].x  + 135 ));
-            let floorTubePeak = ((this.floorTubesArray[this.scoreValue].y - 331) < this.bird.y);
-            let floorTubeBottom = (this.bird.y < (this.floorTubesArray[this.scoreValue].y + 331));
+                let floorTubeStart = ((this.floorTubesArray[this.scoreValue].x - 135 ) < this.bird.x);
+                let floorTubeEnd = (this.bird.x < (this.floorTubesArray[this.scoreValue].x  + 135 ));
+                let floorTubePeak = ((this.floorTubesArray[this.scoreValue].y - 331) < this.bird.y);
+                let floorTubeBottom = (this.bird.y < (this.floorTubesArray[this.scoreValue].y + 331));
 
-            let ceilingTubeStart = ((this.ceilingTubesArray[this.scoreValue].x - 135 ) < this.bird.x);
-            let ceilingTubeEnd = (this.bird.x < (this.ceilingTubesArray[this.scoreValue].x  + 135 ));
-            let ceilingTubePeak = ((this.ceilingTubesArray[this.scoreValue].y - 331) < this.bird.y);
-            let ceilingTubeBottom = (this.bird.y < (this.ceilingTubesArray[this.scoreValue].y + 331));
-            if (floorTubeStart && floorTubeEnd && floorTubePeak && floorTubeBottom) {
-                this.colisionValue++;
-                this.colision.text = "Colision: " + (this.colisionValue);
-            }
-            if (ceilingTubeStart && ceilingTubeEnd && ceilingTubePeak && ceilingTubeBottom) {
-                this.colisionValue++;
-                this.colision.text = "Colision: " + (this.colisionValue);
-            }
+                let ceilingTubeStart = ((this.ceilingTubesArray[this.scoreValue].x - 135 ) < this.bird.x);
+                let ceilingTubeEnd = (this.bird.x < (this.ceilingTubesArray[this.scoreValue].x  + 135 ));
+                let ceilingTubePeak = ((this.ceilingTubesArray[this.scoreValue].y - 331) < this.bird.y);
+                let ceilingTubeBottom = (this.bird.y < (this.ceilingTubesArray[this.scoreValue].y + 331));
+                let topOfFrame = (this.bird.y < 0);
+                let bottomOfFrame = (this.bird.y > 480);
+                if (floorTubeStart && floorTubeEnd && floorTubePeak && floorTubeBottom) {
+                    this.collision++;
+                }
+                if (ceilingTubeStart && ceilingTubeEnd && ceilingTubePeak && ceilingTubeBottom) {
+                    this.collision++;
+                }
+                if (topOfFrame || bottomOfFrame) {
+                    this.collision++;
+                }
             }
         }
-    }
-        if(this.pausecond === 1){
-            
-            this.escKey.onDown.add(()=>{
+        }
+        if (this.collision !== 0) {
+            this.collision = 0;
+            this.scoreValue = 0;
+            this.game.state.start("GameOver");
+        }
+        if (this.pausecond === 1) {
+            this.escKey.onDown.add(() => {
                 this.pausecond = 0;
             }, this);
-            this.button.events.onInputDown.add(()=>{
+            this.button.events.onInputDown.add(() => {
                 this.pausecond = 0;
             }, this);
         }

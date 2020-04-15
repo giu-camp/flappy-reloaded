@@ -8,6 +8,7 @@ import {Boot} from "./states/boot";
 import {Preload} from "./states/preload";
 import {Game} from "./states/game";
 import { MainMenu } from "./states/mainmenu";
+import {GameOver} from "./states/gameover";
 
 class Template extends Phaser.Game {
 
@@ -18,6 +19,7 @@ class Template extends Phaser.Game {
         this.state.add("Preload", Preload, false);
         this.state.add("MainMenu", MainMenu, false);
         this.state.add("Game", Game, false);
+        this.state.add("GameOver", GameOver, false);
 
         this.state.start("Boot");
     }
