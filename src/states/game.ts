@@ -16,6 +16,14 @@ export class Game extends Phaser.State {
     private score;
     private collision = 0;
     public create(): void {
+        this.pausecond = 0;
+        this.speedY = 0;
+        this.floorTubesArray = [];
+        this.ceilingTubesArray = [];
+        this.backgrounds = [];
+        this.scoreValue = 0;
+        this.collision = 0;
+
         for (let i = 0; i < 2; i++) {
             const background = this.game.add.sprite(0, 0, "background");
             background.height = 480;
@@ -101,8 +109,6 @@ export class Game extends Phaser.State {
         }
         }
         if (this.collision !== 0) {
-            this.collision = 0;
-            this.scoreValue = 0;
             this.game.state.start("GameOver");
         }
         if (this.pausecond === 1) {
