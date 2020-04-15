@@ -4,6 +4,9 @@ export class Game extends Phaser.State {
 
     private bird;
     private spaceKey: Phaser.Key;
+    private escKey: Phaser.Key;
+    private button;
+    private pausecond = 0;
     private speedY = 0;
     private gravity = 0.1;
     private floorTubesArray = [];
@@ -34,15 +37,26 @@ export class Game extends Phaser.State {
             ceilingTube.y -= 750;
             this.ceilingTubesArray.push ( ceilingTube );
         }
+        this.button = this.game.add.sprite(400, 30, "button");
+        this.button.scale.setTo(0.4);
+        this.button.inputEnabled = true;
         this.score = this.game.add.bitmapText(200, 30, "font", "Score: ", 35);
         this.colision = this.game.add.bitmapText(200, 70, "font", "Colisions: ", 35);
         this.spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.spaceKey.onDown.add(() => {
             this.speedY = -5;
         }, this);
+        this.escKey = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
     }
 
     public update() {
+        if(this.pausecond === 0){
+            this.escKey.onDown.add(()=>{
+                this.pausecond = 1;
+            }, this);
+            this.button.events.onInputDown.add(()=>{
+                this.pausecond = 1;
+            }, this);
         this.speedY += this.gravity;
         this.bird.y += this.speedY;
         this.bird.angle = this.speedY * 5;
@@ -83,6 +97,16 @@ export class Game extends Phaser.State {
                 this.colision.text = "Colision: " + (this.colisionValue);
             }
             }
+        }
+    }
+        if(this.pausecond === 1){
+            
+            this.escKey.onDown.add(()=>{
+                this.pausecond = 0;
+            }, this);
+            this.button.events.onInputDown.add(()=>{
+                this.pausecond = 0;
+            }, this);
         }
     }
 
