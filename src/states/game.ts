@@ -19,6 +19,40 @@ export class Game extends Phaser.State {
     private score;
     private collision = 0;
     public create(): void {
+
+        this.resetValues();
+        this.generateBackground();
+        this.generateTubes();
+        this.generateUI();
+        this.setupInput();
+        this.bird = new Bird(this.game, 75, 100);
+    }
+
+    private generateUI() {
+        this.button = this.game.add.sprite(400, 30, "button");
+        this.button.scale.setTo(0.4);
+        this.button.inputEnabled = true;
+        this.score = this.game.add.bitmapText(200, 30, "font", "Score: ", 35);
+    }
+
+    private setupInput() {
+        this.spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.spaceKey.onDown.add(() => {
+            this.speedY = -5;
+        }, this);
+        this.escKey = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
+    }
+
+    private generateBackground() {
+        for (let i = 0; i < 2; i++) {
+            const background = this.game.add.sprite(0, 0, "background");
+            background.height = 480;
+            background.x = (background.width) * i;
+            this.backgrounds.push(background);
+        }
+    }
+
+    private resetValues() {
         this.pausecond = 0;
         this.speedY = 0;
         this.floorTubesArray = [];
@@ -26,15 +60,9 @@ export class Game extends Phaser.State {
         this.backgrounds = [];
         this.scoreValue = 0;
         this.collision = 0;
+    }
 
-        for (let i = 0; i < 2; i++) {
-            const background = this.game.add.sprite(0, 0, "background");
-            background.height = 480;
-            background.x = (background.width) * i;
-            this.backgrounds.push(background);
-        }
-        this.bird = new Bird(this.game, 75, 100);
-
+    private generateTubes() {
         //Generator part
         for ( let i = 0; i < Config.tubes; i++ ) {
             const heightVariation = (Math.random() * (100 + 100) - 100);
@@ -45,15 +73,6 @@ export class Game extends Phaser.State {
             const ceilingTube = new Tube(this.game, 600 + i * 600, 615 + heightVariation, true);
             this.ceilingTubesArray.push ( ceilingTube );
         }
-        this.button = this.game.add.sprite(400, 30, "button");
-        this.button.scale.setTo(0.4);
-        this.button.inputEnabled = true;
-        this.score = this.game.add.bitmapText(200, 30, "font", "Score: ", 35);
-        this.spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        this.spaceKey.onDown.add(() => {
-            this.speedY = -5;
-        }, this);
-        this.escKey = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
     }
 
     public update() {
