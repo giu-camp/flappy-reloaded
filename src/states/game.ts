@@ -85,14 +85,11 @@ export class Game extends Phaser.State {
                 const currentFloorTube: Tube = this.floorTubesArray[this.scoreValue];
                 const currentCeilingTube: Tube = this.ceilingTubesArray[this.scoreValue];
 
-                if ( currentFloorTube.intersectsPoint(this.bird.x, this.bird.y) ) {
-                    this.collision++;
-                }
-                if ( currentCeilingTube.intersectsPoint(this.bird.x, this.bird.y) ) {
-                    this.collision++;
-                }
+                const c1 = currentFloorTube.intersectsPoint(this.bird.x, this.bird.y);
+                const c2 = currentCeilingTube.intersectsPoint(this.bird.x, this.bird.y);
+                const c3 = !this.bird.isInsideScreen();
 
-                if ( !this.bird.isInsideScreen() ) {
+                if ( c1 || c2 || c3 ) {
                     this.collision++;
                 }
 
