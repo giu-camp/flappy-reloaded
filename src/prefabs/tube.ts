@@ -19,6 +19,7 @@ export class Tube extends Phaser.Sprite {
     private setToCeilingTube() {
         this.angle = 180;
         this.y -= 750;
+        this.scale.set(-1, 1);
     }
 
     public intersectsPoint(birdX: number, birdY: number): boolean {
