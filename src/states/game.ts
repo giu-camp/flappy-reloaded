@@ -1,8 +1,9 @@
 import { Tube } from "../prefabs/tube";
+import { Bird } from "../prefabs/bird";
 
 export class Game extends Phaser.State {
 
-    private bird;
+    private bird: Bird;
     private spaceKey: Phaser.Key;
     private escKey: Phaser.Key;
     private button;
@@ -30,18 +31,14 @@ export class Game extends Phaser.State {
             background.x = (background.width) * i;
             this.backgrounds.push(background);
         }
-        this.bird = this.game.add.sprite(75, 100, "bird");
-        this.bird.anchor.setTo(0.5);
-        this.bird.scale.setTo(0.65);
+        this.bird = new Bird(this.game, 75, 100);
         for ( let i = 0; i < 10; i++ ) {
             const heightVariation = (Math.random() * (100 + 100) - 100);
 
-            const floorTube = new Tube(this.game, 600 + i * 600, 615 + heightVariation + 50 );
+            const floorTube = new Tube(this.game, 600 + i * 600, 615 + heightVariation + 50, false );
             this.floorTubesArray.push ( floorTube );
 
-            const ceilingTube = new Tube(this.game, 600 + i * 600, 615 + heightVariation);
-            ceilingTube.angle = 180;
-            ceilingTube.y -= 750;
+            const ceilingTube = new Tube(this.game, 600 + i * 600, 615 + heightVariation, true);
             this.ceilingTubesArray.push ( ceilingTube );
         }
         this.button = this.game.add.sprite(400, 30, "button");
@@ -68,8 +65,8 @@ export class Game extends Phaser.State {
         this.bird.angle = this.speedY * 5;
 
         for ( let i = 0; i < this.floorTubesArray.length; i++ ) {
-            this.floorTubesArray[i].x -= 5;
-            this.ceilingTubesArray[i].x -= 5;
+            this.floorTubesArray[i].moveLeft();
+            this.ceilingTubesArray[i].moveLeft();
         }
 
         this.backgrounds.forEach(element => {
@@ -85,26 +82,20 @@ export class Game extends Phaser.State {
 
             }
             if (this.floorTubesArray[this.scoreValue]) {
-                let floorTubeStart = ((this.floorTubesArray[this.scoreValue].x - 135 ) < this.bird.x);
-                let floorTubeEnd = (this.bird.x < (this.floorTubesArray[this.scoreValue].x  + 135 ));
-                let floorTubePeak = ((this.floorTubesArray[this.scoreValue].y - 331) < this.bird.y);
-                let floorTubeBottom = (this.bird.y < (this.floorTubesArray[this.scoreValue].y + 331));
+                const currentFloorTube: Tube = this.floorTubesArray[this.scoreValue];
+                const currentCeilingTube: Tube = this.ceilingTubesArray[this.scoreValue];
 
-                let ceilingTubeStart = ((this.ceilingTubesArray[this.scoreValue].x - 135 ) < this.bird.x);
-                let ceilingTubeEnd = (this.bird.x < (this.ceilingTubesArray[this.scoreValue].x  + 135 ));
-                let ceilingTubePeak = ((this.ceilingTubesArray[this.scoreValue].y - 331) < this.bird.y);
-                let ceilingTubeBottom = (this.bird.y < (this.ceilingTubesArray[this.scoreValue].y + 331));
-                let topOfFrame = (this.bird.y < 0);
-                let bottomOfFrame = (this.bird.y > 480);
-                if (floorTubeStart && floorTubeEnd && floorTubePeak && floorTubeBottom) {
+                if ( currentFloorTube.intersectsPoint(this.bird.x, this.bird.y) ) {
                     this.collision++;
                 }
-                if (ceilingTubeStart && ceilingTubeEnd && ceilingTubePeak && ceilingTubeBottom) {
+                if ( currentCeilingTube.intersectsPoint(this.bird.x, this.bird.y) ) {
                     this.collision++;
                 }
-                if (topOfFrame || bottomOfFrame) {
+
+                if ( !this.bird.isInsideScreen() ) {
                     this.collision++;
                 }
+
             }
         }
         }
