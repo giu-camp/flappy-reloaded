@@ -1,6 +1,8 @@
 import { Tube } from "../prefabs/tube";
 import { Bird } from "../prefabs/bird";
 
+import {Config} from "../config";
+
 export class Game extends Phaser.State {
 
     private bird: Bird;
@@ -32,7 +34,9 @@ export class Game extends Phaser.State {
             this.backgrounds.push(background);
         }
         this.bird = new Bird(this.game, 75, 100);
-        for ( let i = 0; i < 10; i++ ) {
+
+        //Generator part
+        for ( let i = 0; i < Config.tubes; i++ ) {
             const heightVariation = (Math.random() * (100 + 100) - 100);
 
             const floorTube = new Tube(this.game, 600 + i * 600, 615 + heightVariation + 50, false );
@@ -79,6 +83,10 @@ export class Game extends Phaser.State {
             if (this.floorTubesArray[this.scoreValue].x === this.bird.x) {
                 this.scoreValue++;
                 this.score.text = "Score: " + (this.scoreValue);
+
+                if ( this.scoreValue === Config.tubes ) {
+                    this.game.state.start("WinState");
+                }
 
             }
             if (this.floorTubesArray[this.scoreValue]) {
